@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BVEC Code Club – AlgoQuest & Typing Quest | Resplandor 2026</title>
+  <meta name="description" content="Two elite championships. AlgoQuest (27 Mar) & Typing Quest (24 Mar). ₹6,000+ prize pool. BVEC Code Club – Resplandor 2026."/>
+  <meta name="keywords" content="BVEC Code Club, AlgoQuest, Typing Quest, Resplandor 2026"/>
+  <meta name="theme-color" content="#1a0a12"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══════════ LOADING SCREEN ══════════ -->
+<div id="loading-screen">
+  <canvas id="loading-petals"></canvas>
+  <div class="ls-center">
+    <svg class="sakura-bloom" id="sakura-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="pg" cx="35%" cy="25%">
+          <stop offset="0%" stop-color="#fff5f8"/>
+          <stop offset="55%" stop-color="#ffb7c5"/>
+          <stop offset="100%" stop-color="#ff6b9d"/>
+        </radialGradient>
+        <radialGradient id="cg" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#ffe57f"/>
+          <stop offset="100%" stop-color="#ffab40"/>
+        </radialGradient>
+        <filter id="pf"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g transform="translate(100,100)">
+        <g class="sp" transform="rotate(0,100,100)"><ellipse cx="0" cy="-42" rx="20" ry="38" fill="url(#pg)" filter="url(#pf)"/></g>
+        <g class="sp" transform="rotate(72,100,100)"><ellipse cx="0" cy="-42" rx="20" ry="38" fill="url(#pg)" filter="url(#pf)"/></g>
+        <g class="sp" transform="rotate(144,100,100)"><ellipse cx="0" cy="-42" rx="20" ry="38" fill="url(#pg)" filter="url(#pf)"/></g>
+        <g class="sp" transform="rotate(216,100,100)"><ellipse cx="0" cy="-42" rx="20" ry="38" fill="url(#pg)" filter="url(#pf)"/></g>
+        <g class="sp" transform="rotate(288,100,100)"><ellipse cx="0" cy="-42" rx="20" ry="38" fill="url(#pg)" filter="url(#pf)"/></g>
+        <circle class="sc" cx="0" cy="0" r="16" fill="url(#cg)" filter="url(#pf)"/>
+        <circle class="sd" cx="0" cy="-7" r="2.5" fill="#ffd740"/>
+        <circle class="sd" cx="6.7" cy="-3.5" r="2.5" fill="#ffd740"/>
+        <circle class="sd" cx="4.1" cy="5.5" r="2.5" fill="#ffbe40"/>
+        <circle class="sd" cx="-4.1" cy="5.5" r="2.5" fill="#ffbe40"/>
+        <circle class="sd" cx="-6.7" cy="-3.5" r="2.5" fill="#ffd740"/>
+      </g>
+    </svg>
+    <div class="ls-text">
+      <div class="ls-club bvec-brand" style="align-items:center"><span class="b-w">&lt;bvec/&gt;</span><span class="b-y">{Code Club}</span></div>
+      <div class="ls-event">RESPLANDOR 2026</div>
+      <div class="ls-sub">Blossom Valley</div>
+    </div>
+    <div class="ls-progress"><div class="ls-bar" id="ls-bar"></div></div>
+    <div class="ls-status" id="ls-status">Blooming...</div>
+  </div>
+</div>
+
+<!-- ══════════ PETAL CANVAS ══════════ -->
+<canvas id="petal-canvas"></canvas>
+
+<!-- ══════════ MAIN SITE ══════════ -->
+<div id="main-site" style="display:none;opacity:0">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo bvec-brand">
+      <span class="b-w">&lt;bvec/&gt;</span>
+      <span class="b-y">{Code Club}</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#typingquest">Typing Quest</a></li>
+      <li><a href="#algoquest">AlgoQuest</a></li>
+      <li><a href="#prizes">Prizes</a></li>
+      <li><a href="#register" class="nav-cta">Register</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-content">
+      <div class="event-badge">
+        <span class="badge-dot"></span>
+        BVEC CODE CLUB · RESPLANDOR 2026 · BLOSSOM VALLEY
+      </div>
+      <div class="hero-rotating-wrap">
+        <span class="hero-prefix">WE CODE.</span>
+        <span class="hero-spin" id="rotating-text">WE TYPE.</span>
+      </div>
+      <h1 class="hero-title">WE <span class="sakura-text">CONQUER.</span></h1>
+      <p class="hero-subtitle">Two elite championships in Blossom Valley.<br/>
+        <span class="sakura-text">Typing Quest</span> &amp; <span class="cherry-text">AlgoQuest</span> — March 2026.
+      </p>
+      <div class="hero-pills">
+        <a href="#typingquest" class="hpill typing-pill">
+          <div><span class="pill-title">Typing Quest</span><span class="pill-date">24 Mar · Online · 7 PM</span></div>
+        </a>
+        <a href="#algoquest" class="hpill algo-pill">
+          <div><span class="pill-title">AlgoQuest</span><span class="pill-date">27 Mar · CSE Hall · 1:30 PM</span></div>
+        </a>
+      </div>
+      <div class="hero-cta-group">
+        <a href="#typingquest" class="btn btn-sakura" id="hero-cta-typing">Explore Typing Quest <span class="btn-glow"></span></a>
+        <a href="#algoquest" class="btn btn-cherry" id="hero-cta-algo">Explore AlgoQuest <span class="btn-glow"></span></a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-val sakura-text">₹6K+</span><span class="stat-lbl">Prize Pool</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-item"><span class="stat-val sakura-text">2</span><span class="stat-lbl">Championships</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-item"><span class="stat-val sakura-text">FREE</span><span class="stat-lbl">BVEC Entry</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-item"><span class="stat-val sakura-text">100+</span><span class="stat-lbl">Trophies</span></div>
+      </div>
+    </div>
+    <div class="scroll-ind">
+      <span>SCROLL</span><div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- PRIZE POOL -->
+  <section class="prizes section" id="prizes">
+    <div class="section-label">// COMBINED PRIZE POOL</div>
+    <div class="container">
+      <div class="prize-arena reveal">
+        <div class="prize-ring r1"></div><div class="prize-ring r2"></div>
+        <div class="prize-content">
+          <p class="prize-top">TOTAL FESTIVAL</p>
+          <div class="prize-amount">
+            <span class="prize-cur">₹</span>
+            <span class="prize-digits" id="prize-digits">6,000</span>
+            <span class="prize-plus">+</span>
+          </div>
+          <p class="prize-tagline">"Two events. Two battlefields. One festival."</p>
+          <div class="prize-split">
+            <div class="prize-ev"><span class="pe-lbl">Typing Quest</span><span class="pe-amt sakura-text">₹3,000</span></div>
+            <div class="prize-sep">+</div>
+            <div class="prize-ev"><span class="pe-lbl">AlgoQuest</span><span class="pe-amt cherry-text">₹3,000</span></div>
+          </div>
+          <div class="prize-perks">
+            <span class="perk">Trophies</span>
+            <span class="perk">Certificates</span>
+            <span class="perk">For All Events</span>
+          </div>
+        </div>
+        <div class="pp1"></div><div class="pp2"></div><div class="pp3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPING QUEST -->
+  <section class="event-section section" id="typingquest">
+    <div class="section-label">// EVENT I · 24 MARCH 2026</div>
+    <div class="container">
+      <div class="event-card typing-card reveal">
+        <div class="card-bg-grid"></div>
+        <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+        <div class="keyboard-holo" aria-hidden="true">
+          <div class="kb-row"><div class="kb-key">Q</div><div class="kb-key">W</div><div class="kb-key">E</div><div class="kb-key">R</div><div class="kb-key">T</div><div class="kb-key">Y</div><div class="kb-key">U</div><div class="kb-key">I</div><div class="kb-key">O</div><div class="kb-key">P</div></div>
+          <div class="kb-row"><div class="kb-key">A</div><div class="kb-key">S</div><div class="kb-key">D</div><div class="kb-key">F</div><div class="kb-key">G</div><div class="kb-key">H</div><div class="kb-key">J</div><div class="kb-key">K</div><div class="kb-key">L</div></div>
+          <div class="kb-row"><div class="kb-key">Z</div><div class="kb-key">X</div><div class="kb-key">C</div><div class="kb-key">V</div><div class="kb-key">B</div><div class="kb-key">N</div><div class="kb-key">M</div></div>
+          <div class="kb-row"><div class="kb-key kb-space">SPACE</div></div>
+        </div>
+        <div class="card-header">
+          <div class="typing-orb"><div class="t-rings"><div class="tr"></div><div class="tr"></div><div class="tr"></div></div></div>
+          <div><span class="ev-num typing-num">01</span><h2 class="ev-title typing-title">Typing Quest</h2><p class="ev-tag typing-tag">Precision Under Pressure</p></div>
+        </div>
+        <div class="card-body">
+          <div class="event-meta">
+            <div class="mi"><div><span class="ml">Date</span><span class="mv">24 March 2026</span></div></div>
+            <div class="mi"><div><span class="ml">Time</span><span class="mv">7:00 PM (Online)</span></div></div>
+            <div class="mi"><div><span class="ml">Mode</span><span class="mv">Online</span></div></div>
+            <div class="mi"><div><span class="ml">Prize Pool</span><span class="mv prize-val typing-prize">₹3,000</span></div></div>
+          </div>
+          <p class="ev-desc">Three intense typing rounds with a fixed passage including punctuation. Winners decided on accuracy + WPM. Winners receive <strong class="sakura-text">Trophies &amp; Certificates</strong>.</p>
+          <div class="pb-card typing-pb">
+            <div class="pb-item gold"><span class="pbr">1st</span><span class="pba">₹1,500</span></div>
+            <div class="pb-item silver"><span class="pbr">2nd</span><span class="pba">₹1,000</span></div>
+            <div class="pb-item bronze"><span class="pbr">3rd</span><span class="pba">₹500</span></div>
+            <div class="pb-item cert"><span class="pbr">All</span><span class="pba">Certificates</span></div>
+          </div>
+          <div class="wpm-display">
+            <div class="wpm-val" id="wpm-counter">0</div>
+            <div class="wpm-lbl">WPM LIVE DEMO</div>
+            <div class="wpm-bar"><div class="wpm-fill" id="wpm-fill"></div></div>
+          </div>
+          <div class="details-grid">
+            <div class="dc"><h4 class="dt typing-dt">Rules</h4>
+              <ul class="rules-list">
+                <li><span class="ri typing-ri">◈</span> No auto-typing tools</li>
+                <li><span class="ri typing-ri">◈</span> No copy–paste</li>
+                <li><span class="ri typing-ri">◈</span> No external help</li>
+                <li><span class="ri typing-ri">◈</span> Strict anti-malpractice</li>
+                <li><span class="ri typing-ri">◈</span> Upload Student ID (BVEC)</li>
+              </ul>
+            </div>
+            <div class="dc"><h4 class="dt typing-dt">Registration</h4>
+              <ul class="reg-list">
+                <li><span class="free-badge">FREE</span> BVEC Students</li>
+                <li><span class="fee-badge typing-fee">₹19</span> Outside Participants</li>
+              </ul>
+              <h4 class="dt typing-dt" style="margin-top:1.5rem">Coordinators</h4>
+              <ul class="coord-list">
+                <li><span class="cn">Aditya Kumar</span><a href="tel:+918822507783" class="cp typing-cp">8822507783</a></li>
+                <li><span class="cn">Ritam Nath</span><a href="tel:+917099137276" class="cp typing-cp">7099137276</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdd5g5W_dptck1bv_anZCanGRsxAZAiGd3BT7CWx9CvKENFMg/viewform?usp=dialog" target="_blank" rel="noopener" class="btn btn-sakura btn-full" id="register-typing">Register for Typing Quest <span class="ba">→</span><span class="btn-glow"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALGOQUEST -->
+  <section class="event-section section" id="algoquest">
+    <div class="section-label">// EVENT II · 27 MARCH 2026</div>
+    <div class="container">
+      <div class="event-card algo-card reveal">
+        <div class="card-bg-grid algo-grid"></div>
+        <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+        <div class="card-header">
+          <div class="cube-wrap"><div class="cube-scene"><div class="cube"><div class="face front">&lt;/&gt;</div><div class="face back">{ }</div><div class="face right">⚙</div><div class="face left">∑</div><div class="face top">λ</div><div class="face bottom">∞</div></div></div></div>
+          <div><span class="ev-num">02</span><h2 class="ev-title cherry-title">AlgoQuest</h2><p class="ev-tag">The Coding Arena</p></div>
+        </div>
+        <div class="card-body">
+          <div class="event-meta">
+            <div class="mi"><div><span class="ml">Date</span><span class="mv">27 March 2026</span></div></div>
+            <div class="mi"><div><span class="ml">Time</span><span class="mv">1:30 PM onwards</span></div></div>
+            <div class="mi"><div><span class="ml">Venue</span><span class="mv">CSE Seminar Hall, BVEC</span></div></div>
+            <div class="mi"><div><span class="ml">Prize Pool</span><span class="mv prize-val cherry-prize">₹3,000</span></div></div>
+          </div>
+          <p class="ev-desc">A DSA and algorithms challenge where participants solve multiple coding problems under time pressure. Ranked by problems solved then completion time. Winners receive <strong class="cherry-text">Trophies &amp; Certificates</strong>.</p>
+          <div class="pb-card algo-pb">
+            <div class="pb-item gold"><span class="pbr">1st</span><span class="pba">₹1,500</span></div>
+            <div class="pb-item silver"><span class="pbr">2nd</span><span class="pba">₹1,000</span></div>
+            <div class="pb-item bronze"><span class="pbr">3rd</span><span class="pba">₹500</span></div>
+            <div class="pb-item cert"><span class="pbr">All</span><span class="pba">Certificates</span></div>
+          </div>
+          <div class="details-grid">
+            <div class="dc"><h4 class="dt">Rules</h4>
+              <ul class="rules-list">
+                <li><span class="ri">◈</span> No AI tools allowed</li>
+                <li><span class="ri">◈</span> No plagiarism</li>
+                <li><span class="ri">◈</span> Pure problem-solving only</li>
+                <li><span class="ri">◈</span> Bring valid ID</li>
+              </ul>
+            </div>
+            <div class="dc"><h4 class="dt">Registration</h4>
+              <ul class="reg-list">
+                <li><span class="free-badge">FREE</span> BVEC Students</li>
+                <li><span class="fee-badge">FEE</span> Outside Participants</li>
+              </ul>
+              <h4 class="dt" style="margin-top:1.5rem">Coordinators</h4>
+              <ul class="coord-list">
+                <li><span class="cn">Vivek Dubey</span><a href="tel:+916002265204" class="cp">+91 60022 65204</a></li>
+                <li><span class="cn">Abhishek Mazumder</span><a href="tel:+918822344140" class="cp">+91 88223 44140</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://forms.gle/cGGcHwJPsMgySq1JA" target="_blank" rel="noopener" class="btn btn-cherry btn-full" id="register-algo">Register for AlgoQuest <span class="ba">→</span><span class="btn-glow"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION -->
+  <section class="register section" id="register">
+    <div class="section-label">// JOIN THE ARENA</div>
+    <div class="container">
+      <h2 class="section-title center-title">Choose Your <span class="sakura-text">Battlefield</span></h2>
+      <p class="reg-sub">One registration. Infinite glory. Pick your event and prove your worth.</p>
+      <div class="reg-terminal reveal">
+        <div class="term-bar"><span class="tb-dot tb-r"></span><span class="tb-dot tb-y"></span><span class="tb-dot tb-g"></span><span class="tb-title">resplandor_2026.exe</span></div>
+        <div class="term-body">
+          <div class="term-line"><span class="tp">$</span> <span class="tc" id="terminal-cmd">select --event [TypingQuest | AlgoQuest]</span><span class="tcur">█</span></div>
+          <div class="term-line"><span class="tp">$</span> <span class="to">Initializing registration portal...</span></div>
+          <div class="term-line"><span class="tp">$</span> <span class="to ts">✓ Entry systems ONLINE · Blossom Valley active</span></div>
+        </div>
+      </div>
+      <div class="reg-buttons reveal">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdd5g5W_dptck1bv_anZCanGRsxAZAiGd3BT7CWx9CvKENFMg/viewform?usp=dialog" target="_blank" rel="noopener" class="btn btn-sakura btn-reg" id="reg-typing-btn">
+          <div class="rbi"><div><span class="rbt">Register for Typing Quest</span><span class="rbs">24 Mar · Free / ₹19 · Online · 7:00 PM</span></div></div>
+          <span class="ba">→</span><span class="btn-glow"></span>
+        </a>
+        <a href="https://forms.gle/cGGcHwJPsMgySq1JA" target="_blank" rel="noopener" class="btn btn-cherry btn-reg" id="reg-algo-btn">
+          <div class="rbi"><div><span class="rbt">Register for AlgoQuest</span><span class="rbs">27 Mar · Free · CSE Seminar Hall · 1:30 PM</span></div></div>
+          <span class="ba">→</span><span class="btn-glow"></span>
+        </a>
+      </div>
+      <div class="contact-strip reveal">
+        <div class="cs-item"><a href="mailto:bveccodeclubofficial@gmail.com" class="cs-link">bveccodeclubofficial@gmail.com</a></div>
+        <div class="cs-div"></div>
+        <div class="cs-item"><a href="tel:+917002081304" class="cs-link">+91 70020 81304</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer-bloom"></div>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo bvec-brand" style="margin-bottom:1.5rem">
+            <span class="b-w">&lt;bvec/&gt;</span>
+            <span class="b-y">{Code Club}</span>
+          </div>
+          <p class="footer-tag">Code. Type. Conquer.</p>
+        </div>
+        <div class="footer-info">
+          <h4 class="fc-title">Event Info</h4>
+          <p>Typing Quest – 24 March @ 7PM Online</p>
+          <p>AlgoQuest – 27 March @ 1:30PM</p>
+          <p>CSE Seminar Hall, BVEC</p>
+          <p style="margin-top:.75rem"><a href="mailto:bveccodeclubofficial@gmail.com" class="footer-link">bveccodeclubofficial@gmail.com</a></p>
+          <p><a href="tel:+917002081304" class="footer-link-dim">+91 70020 81304</a></p>
+        </div>
+        <div class="footer-contacts">
+          <h4 class="fc-title">Contact Us</h4>
+          <div class="cr"><span class="ce sakura-text">Typing Quest</span><div><a href="tel:+918822507783" class="fp">Aditya: 8822507783</a><a href="tel:+917099137276" class="fp">Ritam: 7099137276</a></div></div>
+          <div class="cr"><span class="ce cherry-text">AlgoQuest</span><div><a href="tel:+916002265204" class="fp">Vivek: +91 60022 65204</a><a href="tel:+918822344140" class="fp">Abhishek: +91 88223 44140</a></div></div>
+        </div>
+        <div class="footer-social">
+          <h4 class="fc-title">Follow Us</h4>
+          <div class="social-links">
+            <a href="#" class="sb" id="social-instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" class="sb" id="social-linkedin" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="sb" id="social-youtube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1a0a12"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-glow-line"></div>
+        <p class="footer-copy">Designed &amp; Engineered by <span class="sakura-text">BVEC Code Club – Resplandor 2026 Team</span></p>
+        <p class="footer-rights">© 2026 BVEC Code Club. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end #main-site -->
+<!-- ══════════ MUSIC TOGGLE ══════════ -->
+<button id="music-toggle" class="music-toggle" aria-label="Toggle ambient music" title="Toggle Blossom Valley Ambience">
+  <svg id="music-icon-on" class="music-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+  </svg>
+  <svg id="music-icon-off" class="music-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    <line x1="2" y1="2" x2="22" y2="22"/>
+  </svg>
+  <span class="music-label">Ambience</span>
+</button>
+
+<script src="script.js"></script>
+</body>
+</html>

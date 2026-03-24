@@ -359,6 +359,18 @@ ul{list-style:none}
 .cd-wrap.cd-ended .cd-label{color:var(--textmut)}
 .cd-wrap.cd-ended .cd-dot{background:var(--textmut);box-shadow:none;animation:none}
 
+/* ── COMPLETED STAMP (auto-reorder) ── */
+.card-ended{filter:grayscale(60%) opacity(.8);pointer-events:none;transition:filter .5s,opacity .5s}
+.ev-stamp{
+  position:absolute;top:30px;right:-40px;background:var(--樱花);
+  background:linear-gradient(90deg,var(--sakura3),var(--cherry2));
+  color:#fff;padding:.4rem 4rem;transform:rotate(45deg);
+  font-family:var(--font-d);font-size:.8rem;font-weight:900;
+  letter-spacing:.25em;box-shadow:0 10px 30px rgba(233,30,99,.4);
+  z-index:10;text-align:center;
+}
+.ev-stamp-text{text-shadow:0 2px 4px rgba(0,0,0,.3)}
+
 /* ── REGISTRATION ── */
 .reg-sub{text-align:center;color:var(--text2);font-size:.95rem;margin-bottom:2.5rem;margin-top:-.5rem}
 .reg-terminal{max-width:600px;margin:0 auto 2.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--gborder);background:rgba(0,0,0,.45);box-shadow:0 20px 60px rgba(0,0,0,.4)}
@@ -408,8 +420,26 @@ ul{list-style:none}
 .sb:hover{border-color:var(--sakura);color:var(--sakura);box-shadow:0 0 15px rgba(255,107,157,.2)}
 .footer-bottom{text-align:center;position:relative}
 .footer-glow-line{height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,157,.2),rgba(233,30,99,.2),transparent);margin-bottom:2rem}
-.footer-copy{font-size:.8rem;color:var(--text2);margin-bottom:.4rem}
-.footer-rights{font-size:.7rem;color:var(--textmut)}
+.footer-copy{font-size:.8rem;color:var(--text2);margin-bottom:.6rem}
+.footer-rights{font-size:.7rem;color:var(--textmut);margin-top:.5rem}
+
+/* Last Updated Badge */
+.last-updated-badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  margin:.6rem auto .4rem;padding:.32rem .85rem;
+  border-radius:100px;border:1px solid rgba(255,107,157,.18);
+  background:rgba(255,107,157,.05);backdrop-filter:blur(8px);
+  font-family:'Share Tech Mono',monospace;font-size:.63rem;
+  color:var(--textmut);letter-spacing:.1em;
+  transition:border-color .25s,color .25s,box-shadow .25s;cursor:default;
+}
+.last-updated-badge:hover{
+  border-color:rgba(255,107,157,.4);color:var(--sakura2);
+  box-shadow:0 0 14px rgba(255,107,157,.12);
+}
+.lu-icon{display:flex;align-items:center;color:var(--sakura);opacity:.7;flex-shrink:0}
+.lu-text{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;justify-content:center}
+.lu-time{color:var(--sakura2);font-style:normal}
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}

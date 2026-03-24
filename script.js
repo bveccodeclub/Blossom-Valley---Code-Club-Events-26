@@ -615,3 +615,87 @@ window.addEventListener('load', () => {
   setInterval(tick, 1000);
 })();
 
+// ━━━━━━ AUTO EVENT REORDER (ended → move down) ━━━━━━
+(function initEventReorder() {
+  // "Ended" threshold = 2 h after event start (matches countdown logic)
+  // Typing Quest: 24 Mar 7 PM IST = 13:30 UTC  →  ended at 15:30 UTC
+  // AlgoQuest:    27 Mar 11:30 AM IST = 06:00 UTC  →  ended at 08:00 UTC
+  const TYPING_ENDED = new Date('2026-03-24T15:30:00Z').getTime();
+  const ALGO_ENDED   = new Date('2026-03-27T08:00:00Z').getTime();
+
+  const typingSection = document.getElementById('typingquest');
+  const algoSection   = document.getElementById('algoquest');
+  if (!typingSection || !algoSection) return;
+  const parent = typingSection.parentElement;
+
+  // ── Stamp helper ──
+  function addStamp(section, label) {
+    if (section.querySelector('.ev-stamp')) return;
+    const card = section.querySelector('.event-card');
+    if (!card) return;
+    card.classList.add('card-ended');
+    const stamp = document.createElement('div');
+    stamp.className = 'ev-stamp';
+    stamp.innerHTML = `<span class="ev-stamp-text">${label}</span>`;
+    card.appendChild(stamp);
+  }
+
+  // ── Reorder helper ──
+  let reordered = false;
+  function doReorder() {
+    if (reordered) return;
+    reordered = true;
+
+    // Fade both out
+    [typingSection, algoSection].forEach(s => {
+      s.style.transition = 'opacity .5s ease, transform .5s ease';
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(20px)';
+    });
+
+    setTimeout(() => {
+      // Move algoSection before typingSection in DOM
+      parent.insertBefore(algoSection, typingSection);
+
+      // Update section labels
+      const tLabel = typingSection.querySelector('.section-label');
+      const aLabel = algoSection.querySelector('.section-label');
+      if (aLabel) aLabel.textContent = '// EVENT I · 27 MARCH 2026 · UPCOMING';
+      if (tLabel) tLabel.textContent = '// EVENT II · 24 MARCH 2026 · COMPLETED';
+
+      // Reorder nav links
+      const nav = document.getElementById('nav-links');
+      if (nav) {
+        const tLi = nav.querySelector('a[href="#typingquest"]')?.parentElement;
+        const aLi = nav.querySelector('a[href="#algoquest"]')?.parentElement;
+        if (tLi && aLi) nav.insertBefore(aLi, tLi);
+      }
+
+      // Fade back in
+      setTimeout(() => {
+        [typingSection, algoSection].forEach(s => {
+          s.style.opacity = '1';
+          s.style.transform = 'translateY(0)';
+        });
+      }, 60);
+    }, 520);
+  }
+
+  function check() {
+    const now = Date.now();
+    const typingEnded = now >= TYPING_ENDED;
+    const algoEnded   = now >= ALGO_ENDED;
+
+    // Stamp ended events
+    if (typingEnded) addStamp(typingSection, 'COMPLETED');
+    if (algoEnded)   addStamp(algoSection,   'COMPLETED');
+
+    // Reorder: typing ended but algo still upcoming → algo floats up
+    if (typingEnded && !algoEnded) doReorder();
+  }
+
+  check(); // run immediately on load
+  setInterval(check, 30000); // re-check every 30 s
+})();
+
+

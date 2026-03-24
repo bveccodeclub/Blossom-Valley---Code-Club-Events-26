@@ -690,8 +690,16 @@ window.addEventListener('load', () => {
     if (typingEnded) addStamp(typingSection, 'COMPLETED');
     if (algoEnded)   addStamp(algoSection,   'COMPLETED');
 
-    // Reorder: typing ended but algo still upcoming → algo floats up
-    if (typingEnded && !algoEnded) doReorder();
+    // Labels since we manually reordered them
+    if (typingEnded && !algoEnded) {
+      if (!reordered) {
+        reordered = true;
+        const tLabel = typingSection.querySelector('.section-label');
+        const aLabel = algoSection.querySelector('.section-label');
+        if (aLabel) aLabel.textContent = '// EVENT I · 27 MARCH 2026 · UPCOMING';
+        if (tLabel) tLabel.textContent = '// EVENT II · 24 MARCH 2026 · COMPLETED';
+      }
+    }
   }
 
   check(); // run immediately on load
